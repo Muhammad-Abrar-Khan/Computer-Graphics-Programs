@@ -4,6 +4,7 @@ void display() {
     // Your rendering code goes here
     glClear(GL_COLOR_BUFFER_BIT);
     
+    glClearColor(1.0, 1.0, 1.0, 1.0); // Set the clear color to white
     // Add your OpenGL drawing commands here
     
     // End of rendering code

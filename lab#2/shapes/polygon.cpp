@@ -3,8 +3,9 @@
 
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(1.0, 1.0, 1.0); // Set the color to white
 
+    glClearColor(1.0, 1.0, 1.0, 1.0); // Set the clear color to white
+    glColor3f(0.0, 0.0, 0.0); // Set the drawing color to black
     glBegin(GL_LINES);
 
     // Define six vertices for the hexagon in a counterclockwise order
