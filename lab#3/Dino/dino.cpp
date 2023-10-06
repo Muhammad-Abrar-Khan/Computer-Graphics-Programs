@@ -57,13 +57,13 @@ void myDisplay(void)
 	drawPolyLineFile("dino.dat");
 
 	/*Second TASK:add the TILING code*/
-	/*setWindow(0.0,640.0,0.0,480.0);
-	 for(int i=0;i< 10; i++)
-		 for(int j=0;j<10;j++)
-		 {
-			 glViewport(i*64,j*44,64,44);
-			 drawPolyLineFile("dino.dat");
-		 }
+	// setWindow(0.0,640.0,0.0,480.0);
+	//  for(int i=0;i< 10; i++)
+	// 	 for(int j=0;j<10;j++)
+	// 	 {
+	// 		 glViewport(i*64,j*44,64,44);
+	// 		 drawPolyLineFile("dino.dat");
+	// 	 }
 	/*second TASK:add the code*/
 
 	/*THIRD TASK:add the code tiling and Fliping*/
@@ -78,8 +78,8 @@ void myDisplay(void)
 		 drawPolyLineFile("dino.dat");
 		 }*/
 	/*THIRD TASK:Regular Ngon*/
-	setWindow(-10.0, 50, -10.0, 50);
-	ngon(6, cxx, 0.0, 5.0, rotAnglee);
+	// setWindow(-10.0, 50, -10.0, 50);
+	// ngon(6, cxx, 0.0, 5.0, rotAnglee);
 	/*THIRD TASK:Regular Ngon*/
 
 	glutSwapBuffers();
