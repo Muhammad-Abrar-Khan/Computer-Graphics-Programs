@@ -51,8 +51,8 @@ void myDisplay(void)
 	drawPolyLineFile("birdhead.dat");
 	drawPolyLineFile("house.dat");
 
-	for(int i=0;i< 5; i++)
-		 for(int j=0;j<5;j++)
+	for(int i=0;i< 10; i++)
+		 for(int j=0;j<10;j++)
 		 {
 		 if((i+j)%2 ==0)
 			 setWindow(0.0, 640.0,0.0,480.0);
@@ -61,8 +61,6 @@ void myDisplay(void)
 		 glViewport(i*64,j*44,64,44);
 		 drawPolyLineFile("dino.dat");
 		 }
-	// setWindow(-10.0, 50, -10.0, 50);
-	// ngon(6, cxx, 0.0, 5.0, rotAnglee);
 
 	glutSwapBuffers();
 }
