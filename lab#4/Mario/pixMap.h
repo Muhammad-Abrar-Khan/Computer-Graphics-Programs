@@ -1,3 +1,5 @@
+#ifndef PIXMAP_H
+#define PIXMAP_H
 #include <malloc.h>
 #include <math.h>
 #include <fstream>
@@ -373,4 +375,5 @@ void RGBApixmap::setChromaKey(int r, int g, int b)
 	
 		}
 }
+#endif // PIXMAP_H
 

@@ -19,7 +19,7 @@ void myInit(void)
 	  gluOrtho2D(0,640,0,480);
 	  glMatrixMode(GL_MODELVIEW);
 	  glLoadIdentity();
-	  m.changeMode(Mario::STAY);
+m.changeMode(MARIO_STAY);
 	 
 	}
 
@@ -44,12 +44,12 @@ void myKB_Handler(unsigned char key, int mx, int my)
 	{
 	  case 'f':
 		  
-		  m.changeMode(Mario::RUN);
+m.moveRight(); // Assuming 'f' key makes Mario run to the right
 		  break;
 
 	  case 'j':
 		  
-		  m.changeMode(Mario::JUMP);
+m.jump();
 		  break;
 	}
 
