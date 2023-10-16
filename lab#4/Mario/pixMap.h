@@ -1,5 +1,4 @@
-#ifndef PIXMAP_H
-#define PIXMAP_H
+#include <GL/gl.h> // Include OpenGL header at the beginning
 #include <malloc.h>
 #include <math.h>
 #include <fstream>
@@ -10,7 +9,7 @@ using std::fstream;
 using std::ios;
 using std::string;
 using std::cout;
-using std:: endl;
+using std::endl;
 
 // ********** mRGBA class **********
 typedef unsigned char uchar;
@@ -18,8 +17,8 @@ typedef unsigned char uchar;
 
 class mRGBA { // the name RGBA is already used by Windows
 
-public : 
-	
+public :
+
 	unsigned char r, g, b, a;
     mRGBA() { r=g=b=0; a=255; }
     mRGBA(mRGBA &p) { r=p.r; g=p.g; b=p.b; a=p.a; }
@@ -42,13 +41,13 @@ unsigned short getShort(FILE *fp)
 
 	char ic;
 	unsigned short ip;
-	
+
 	ic = fgetc( fp );
-	ip = ic;			//first byte is little one 
-	
+	ip = ic;			//first byte is little one
+
 	ic = fgetc( fp );
 	ip |= ( (unsigned short) ic << 8 );	// or in high order byte
-	
+
 	return ip;
 
 }
@@ -57,7 +56,7 @@ unsigned short getShort(FILE *fp)
 
 //helper function
 unsigned long getLong(FILE *fp)
-{  
+{
 	//BMP format uses little-endian integer types
 	// get a 4-byte integer stored in little-endian form
 
@@ -67,19 +66,19 @@ unsigned long getLong(FILE *fp)
 
 	ic = fgetc( fp );
 	uc = ic; ip = uc;
-	
+
 	ic = fgetc( fp );
-	uc = ic; 
+	uc = ic;
 	ip |=( (unsigned long) uc << 8 );
-	
+
 	ic = fgetc( fp );
-	uc = ic; 
+	uc = ic;
 	ip |=( (unsigned long) uc << 16 );
-	
+
 	ic = fgetc( fp );
-	uc = ic; 
+	uc = ic;
 	ip |=( (unsigned long) uc << 24 );
-	
+
 	return ip;
 
 }
@@ -113,10 +112,6 @@ float fx(float x, float a0, float a1)
 }
 
 
-
-
-
-
 class RGBApixmap
 {
 	private:
@@ -125,8 +120,8 @@ class RGBApixmap
 	public:
             int nRows, nCols;                       // dimensions of pixel map
 	     	 RGBApixmap() { nRows = nCols = 0; pixel = 0; }
-            
-			 RGBApixmap(int rows, int cols) 
+
+			 RGBApixmap(int rows, int cols)
 			 {
                  nRows = rows;
                 nCols = cols;
@@ -137,16 +132,16 @@ class RGBApixmap
                        delete []pixel;
                         nRows = nCols = 0;
                }
-               
+
                 // *** draw this pixel map at current position
 
-            void mDraw() 
+            void mDraw()
 			{
-                if (nRows == 0 || nCols == 0) 
+                if (nRows == 0 || nCols == 0)
                 return;
 
 				// tell OpenGL: don't align pixels with 4-byte boundaries in memory
-                glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+                glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
                 glDrawPixels(nCols, nRows, GL_RGBA, GL_UNSIGNED_BYTE, pixel);
 
             }
@@ -164,9 +159,9 @@ class RGBApixmap
 			glReadPixels(x, y, nCols, nRows, GL_RGBA, GL_UNSIGNED_BYTE, pixel);
 			return 0;
 			}
-    
 
-        // *** setPixel 
+
+        // *** setPixel
 
             void setPixel(int x, int y, mRGBA color) {
 
@@ -190,24 +185,24 @@ class RGBApixmap
                         return pixel[nCols*y+x];
 
             }
+
 		// *** read BMP file into this pixel map (see RGBpixmap.cpp)
 		int readBMPFile(string fname, float para);
-void setChromaKey(int r, int g, int b);
-		
-		
+	 	void setChromaKey(int r,int g, int b);
+
+
 }; // class RGBApixmap
 
- 
 
 
-int getAlpha(int row, int col, int nRows,int nCols,float (*p)(float, float, float), float a1) 
+int getAlpha(int row, int col, int nRows,int nCols,float (*p)(float, float, float), float a1)
 {
 
   int   rowCenter, colCenter, alpha;
 
   float dx, dy, dist=0.0;
 
- 
+
 
   rowCenter = (float)nRows/2.0;
 
@@ -225,13 +220,13 @@ int getAlpha(int row, int col, int nRows,int nCols,float (*p)(float, float, floa
 
 }
 
- 
+
 
 // *** Read into memory an mRGB image from an uncompressed BMP file
 
 // return 0 on fail, 1 for Ok
 
-int RGBApixmap::readBMPFile(string fname, float para) 
+int RGBApixmap::readBMPFile(string fname, float para)
 {
    FILE *fp;
 
@@ -241,20 +236,20 @@ int RGBApixmap::readBMPFile(string fname, float para)
 
 	unsigned long fileSize;
 	unsigned short reserved1;		// always 0
-	unsigned short reserved2;		// always 0 
+	unsigned short reserved2;		// always 0
 	unsigned long offBits;			// offset to image - unreliable
 	unsigned long headerSize;		// always 40
 	unsigned long numCols;			// number of columns in image
 	unsigned long numRows;			// number of rows in image
-	unsigned short planes;			// always 1 
+	unsigned short planes;			// always 1
 	unsigned short bitsPerPixel;    // 8 or 24; allow 24 here
-	unsigned long compression;      // must be 0 for uncompressed 
-	unsigned long imageSize;		// total bytes in image 
-	unsigned long xPels;			// always 0 
-	unsigned long yPels;			// always 0 
-	unsigned long numLUTentries;    // 256 for 8 bit, otherwise 0 
-	unsigned long impColors;		// always 0 
-	
+	unsigned long compression;      // must be 0 for uncompressed
+	unsigned long imageSize;		// total bytes in image
+	unsigned long xPels;			// always 0
+	unsigned long yPels;			// always 0
+	unsigned long numLUTentries;    // 256 for 8 bit, otherwise 0
+	unsigned long impColors;		// always 0
+
 	long count = 0;
 
 
@@ -278,27 +273,27 @@ printf( "%s is not a bitmap file.\n", fname.c_str() );
 
 
 
-    fileSize		= getLong( fp );	
+    fileSize		= getLong( fp );
 	reserved1		= getShort( fp );	// always 0
-	reserved2		= getShort( fp );	// always 0 
+	reserved2		= getShort( fp );	// always 0
 	offBits			= getLong( fp );	// offset to image - unreliable
 	headerSize		= getLong( fp );	// always 40
 	numCols			= getLong( fp );	// number of columns in image
 	numRows			= getLong( fp );	// number of rows in image
-	planes			= getShort( fp );	// always 1 
+	planes			= getShort( fp );	// always 1
 	bitsPerPixel	= getShort( fp );	//8 or 24; allow 24 here
-	compression		= getLong( fp );	// must be 0 for uncompressed 
-	imageSize		= getLong( fp );	// total bytes in image 
-	xPels			= getLong( fp );	// always 0 
-	yPels			= getLong( fp );	// always 0 
-	numLUTentries	= getLong( fp );	// 256 for 8 bit, otherwise 0 
-	impColors		= getLong( fp );	// always 0 
+	compression		= getLong( fp );	// must be 0 for uncompressed
+	imageSize		= getLong( fp );	// total bytes in image
+	xPels			= getLong( fp );	// always 0
+	yPels			= getLong( fp );	// always 0
+	numLUTentries	= getLong( fp );	// 256 for 8 bit, otherwise 0
+	impColors		= getLong( fp );	// always 0
 
 
 
-	if( bitsPerPixel != 24 ) 
+	if( bitsPerPixel != 24 )
 	{
-		
+
 		// error - must be a 24 bit uncompressed image
 		printf( "Error bitsperpixel not 24\n" );
 		exit( 1 );
@@ -318,10 +313,10 @@ printf( "%s is not a bitmap file.\n", fname.c_str() );
 	this->nRows = numRows;		// set class's data members
 	this->nCols = numCols;
 	this->pixel = new mRGBA [ nRows * nCols ];	// make space for array
-	
+
 	if( !this->pixel ) return 0; // out of memory!
 		count = 0;
-	
+
 
 
 	//dum;
@@ -333,12 +328,12 @@ printf( "%s is not a bitmap file.\n", fname.c_str() );
 			b = fgetc( fp );
 			g = fgetc( fp );
 			r = fgetc( fp );			// read bytes
-			
+
 
 			pixel[count].r = r;	// place them in colors
 			pixel[count].g = g;
 			pixel[count].b = b;
-			
+
 			pixel[count++].a = 255;
 
 		}
@@ -347,7 +342,7 @@ printf( "%s is not a bitmap file.\n", fname.c_str() );
 	}
 
 
-	fclose( fp ); 
+	fclose( fp );
 
 
 	return 1;
@@ -359,21 +354,20 @@ printf( "%s is not a bitmap file.\n", fname.c_str() );
 
 
 void RGBApixmap::setChromaKey(int r, int g, int b)
-{	
+{
 	long count = 0;
-	
+
 	for(int row = 0; row <this->nCols ; row++)
 		for(int col = 0; col < this->nRows; col++)
 		{
 			mRGBA p = pixel[count];
-			
 
-			if(p.r == r && p.g == g && p.b == b) 
+
+			if(p.r == r && p.g == g && p.b == b)
 				pixel[ count++ ].a = 0;
-			else 
+			else
 				pixel[ count++ ].a = 255;
-	
+
 		}
 }
-#endif // PIXMAP_H
 

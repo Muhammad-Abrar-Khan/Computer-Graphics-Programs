@@ -1,31 +1,33 @@
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
-#include <GL/glut.h>
+
 #include "pixMap.h"
 #include "Mario.h"
+#include <GL/gl.h>
+#include <GL/glut.h>
 
 Mario m(Point2 (0,0));
 
 
 void myInit(void)
-	{
+    {
 	  glClearColor(1.0f,1.0f,1.0f,1.0f);
 	  glEnable(GL_ALPHA_TEST);
-	  glAlphaFunc(GL_EQUAL,1.0); 
+	  glAlphaFunc(GL_EQUAL,1.0);
 	  glViewport(0, 0, 640, 480);
 	  glMatrixMode(GL_PROJECTION);
-	  glLoadIdentity(); 
+	  glLoadIdentity();
 	  gluOrtho2D(0,640,0,480);
 	  glMatrixMode(GL_MODELVIEW);
 	  glLoadIdentity();
-m.changeMode(MARIO_STAY);
-	 
+	  m.changeMode(Mario::STAY);
+
 	}
 
 void display(void)
 	{
-		 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);        
+		 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 		 m.render();
 		 glFlush();
 	}
@@ -33,8 +35,8 @@ void display(void)
 void spinner(int t)
 	{
 	   glutPostRedisplay();
-	   glutTimerFunc(500,spinner,t);			
-		
+	   glutTimerFunc(500,spinner,t);
+
 	}
 
 
@@ -42,18 +44,23 @@ void myKB_Handler(unsigned char key, int mx, int my)
 {
     switch(key)
 	{
-	  case 'f':
-		  
-m.moveRight(); // Assuming 'f' key makes Mario run to the right
+	  case 'r':
+		  m.changeMode(Mario::RUN);
 		  break;
 
 	  case 'j':
-		  
-m.jump();
+		  m.changeMode(Mario::JUMP);
 		  break;
-	}
 
+     case 's':
+		  m.changeMode(Mario::STAY);
+		  break;
+
+     default:
+        break;
+	}
 	glutPostRedisplay();
+
 }
 
 
@@ -63,12 +70,11 @@ int main(int argc, char **argv)
   glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_DEPTH);
   glutInitWindowSize(640, 480);
   glutInitWindowPosition(10, 10);
-  glutCreateWindow("My Mario----");
-  
-  
+  glutCreateWindow("Mario Sprite Animation");
+
   glutDisplayFunc(display);
   glutKeyboardFunc(myKB_Handler);
-  
+
   myInit();
   glutIdleFunc(display);
   glutMainLoop();
