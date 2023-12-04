@@ -44,11 +44,11 @@ public:
 	Mario(Point2 pos)
 
 	{
-	  pix[0].readBMPFile("/home/abrar/Desktop/University/6th Sem/CG/labs/programs/Computer Graphics Programs/lab#4/Mario/MarioStanding.bmp",1);
-	  pix[1].readBMPFile("/home/abrar/Desktop/University/6th Sem/CG/labs/programs/Computer Graphics Programs/lab#4/Mario/MarioRun2.bmp",1);  // read texture for side 1 from image
-	  pix[2].readBMPFile("/home/abrar/Desktop/University/6th Sem/CG/labs/programs/Computer Graphics Programs/lab#4/Mario/MarioRun1.bmp",1);
-	  pix[3].readBMPFile("/home/abrar/Desktop/University/6th Sem/CG/labs/programs/Computer Graphics Programs/lab#4/Mario/MarioRun1.bmp",1);  // read texture for side 1 from image
-	  pix[4].readBMPFile("/home/abrar/Desktop/University/6th Sem/CG/labs/programs/Computer Graphics Programs/lab#4/Mario/MarioJump.bmp",1);
+	  pix[0].readBMPFile("MarioStanding.bmp",1);
+	  pix[1].readBMPFile("MarioRun2.bmp",1);  // read texture for side 1 from image
+	  pix[2].readBMPFile("MarioRun1.bmp",1);
+	  pix[3].readBMPFile("MarioRun1.bmp",1);  // read texture for side 1 from image
+	  pix[4].readBMPFile("MarioJump.bmp",1);
 
 	  for(int i=0;i<5;i++)
 		pix[i].setChromaKey(192,192,192);

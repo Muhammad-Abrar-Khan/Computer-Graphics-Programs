@@ -90,3 +90,16 @@ void setWindow(float left, float sWidth, float bottom, float sHeight)
     glLoadIdentity();
     gluOrtho2D(left, sWidth, bottom, sHeight);
 }
+
+// Basic implementation of myMove
+void myMove(int t)
+{
+    // Example logic for updating something in the scene
+    // Modify this according to your program's needs
+
+    // Re-register the timer for continuous updates
+    glutTimerFunc(1000, myMove, t);
+
+    // Request a redisplay
+    glutPostRedisplay();
+}
